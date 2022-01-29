@@ -1,10 +1,14 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Art/screen_template.png" type="Texture" id=1]
 [ext_resource path="res://Goblin.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Main.gd" type="Script" id=3]
 [ext_resource path="res://Arrow.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Building.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Thumper.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Core.tscn" type="PackedScene" id=6]
+[ext_resource path="res://SolarRail.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Menu/Menu.tscn" type="PackedScene" id=8]
+[ext_resource path="res://SupplyBeacon.tscn" type="PackedScene" id=9]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -29,7 +33,10 @@ _data = {
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 3 )
 Goblin_scene = ExtResource( 2 )
-Building_Collection = ExtResource( 5 )
+Thumper_scene = ExtResource( 5 )
+SolarRail_scene = ExtResource( 7 )
+SupplyBeacon_scene = ExtResource( 9 )
+Core_scene = ExtResource( 6 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_right = 1327.0
@@ -88,5 +95,9 @@ curve = SubResource( 4 )
 [node name="PathFollow2D" type="PathFollow2D" parent="RightSpawn"]
 position = Vector2( 897, 4 )
 rotation = 1.5708
+
+[node name="Menu" parent="." instance=ExtResource( 8 )]
+position = Vector2( 900, 0 )
+z_index = 4096
 
 [connection signal="timeout" from="Spawn" to="." method="_on_Spawn_timeout"]
