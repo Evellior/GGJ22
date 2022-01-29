@@ -10,9 +10,11 @@ export(PackedScene) var SupplyBeacon_scene
 
 export(PackedScene) var Core_scene
 
+var wait = 0
 var Direction = 0
 var buildings = PoolVector2Array()
 var nextBuild = ""
+var Goblins = Array()
 var tempdelta = 0.0
 # Declare member variables here. Examples:
 # var a = 2
@@ -44,6 +46,24 @@ func _process(delta):
 		if (tempdelta > 2.0):
 			GameStats.GoblinKilled()
 			tempdelta = 0
+	
+	var GoblinsToRemove = Array()
+	
+	for i in Goblins.size():
+		print(i)
+		#if (Gobo.RecheckDirection()):
+		if (Goblins[i].IsAlive()):
+			Goblins[i].CheckDirection(closestBuilding(Goblins[i].position))
+		else:
+			GoblinsToRemove.push_back(i)
+	
+	var RemoveIndex = 0
+	
+	for i in GoblinsToRemove.size():
+		RemoveIndex = GoblinsToRemove[i]
+		
+		Goblins[RemoveIndex].queue_free()
+		Goblins.pop_at(RemoveIndex)
 
 func _input(event):
 	# print(event.as_text())
@@ -91,6 +111,10 @@ func _on_Spawn_timeout():
 		SpawnPoint.offset = randi()
 		
 		Gobo.position = SpawnPoint.position
+		
+		Gobo.CheckDirection(closestBuilding(Gobo.position))
+		
+		Goblins.push_back(Gobo)
 
 
 func _on_SwapDirection_timeout():
