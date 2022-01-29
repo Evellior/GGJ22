@@ -1,18 +1,18 @@
 extends Node
 
-export(PackedScene) var Menu_scene
-
 export(PackedScene) var Goblin_scene
 
 export(PackedScene) var Thumper_scene
 
 export(PackedScene) var SolarRail_scene
 
+export(PackedScene) var SupplyBeacon_scene
+
 export(PackedScene) var Core_scene
 
 var Direction = 0
 var buildings = PoolVector2Array()
-
+var nextBuild = ""
 var tempdelta = 0.0
 # Declare member variables here. Examples:
 # var a = 2
@@ -49,7 +49,15 @@ func _input(event):
 	# print(event.as_text())
 	if event is InputEventMouseButton:
 		if event.is_pressed():
-			placeThumper(event.position)
+			match nextBuild:
+				"Thumper":
+					if(placeThumper(event.position)): nextBuild = ""
+				"SolarRail":
+					if(placeSolarRail(event.position)): nextBuild = ""
+				"SupplyBeacon":
+					if(placeSupplyBeacon(event.position)): nextBuild = ""
+				"":
+					print("Nothing to build")
 
 func _on_Spawn_timeout():
 	var SpawnPoint = ""
@@ -185,6 +193,8 @@ func placeThumper(location):
 		newBuilding.z_index = location.y
 		add_child(newBuilding)
 		buildings.push_back(getGridRoundedLocation(newBuilding.position))
+		return true
+	return false
 
 func placeSolarRail(location):
 	#find closest grid location
@@ -200,3 +210,32 @@ func placeSolarRail(location):
 		newBuilding.z_index = location.y
 		add_child(newBuilding)
 		buildings.push_back(getGridRoundedLocation(newBuilding.position))
+		return true
+	return false
+
+func placeSupplyBeacon(location):
+	#find closest grid location
+	location = getGridRoundedLocation(location)
+	
+	#check is inside build area and other build allowed checks
+	if (location.x > 64 && location.x < 13*64 && location.y > 64 && location.y < 13*64 && !isBuildingHere(location)):
+		#offset for individual sprite
+		location.x += 2
+		location.y -= 15
+		var newBuilding = SupplyBeacon_scene.instance()
+		newBuilding.position = location
+		newBuilding.z_index = location.y
+		add_child(newBuilding)
+		buildings.push_back(getGridRoundedLocation(newBuilding.position))
+		return true
+	return false
+## Menu
+
+func setBuildThumper():
+	nextBuild = "Thumper"
+
+func setBuildSolarRail():
+	nextBuild = "SolarRail"
+
+func setBuildSupplyBeacon():
+	nextBuild = "SupplyBeacon"
