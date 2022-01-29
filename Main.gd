@@ -61,14 +61,13 @@ func placeBuilding(location):
 	var offset = 64.0/2
 	location.x -= fmod(location.x, 64.0) - offset - 2
 	location.y -= fmod(location.y, 64.0) - offset + 17
-	#check is inside build area
-	if (location.x > 64 && location.x < 13*64 && location.y > 64 && location.y < 13*64):
-		if (!isBuildingHere(location)):
-			var newBuilding = Building_Collection.instance()
-			newBuilding.position = location
-			newBuilding.z_index = location.y
-			add_child(newBuilding)
-			buildings.push_back(newBuilding.position)
+	#check is inside build area and other build allowed checks
+	if (location.x > 64 && location.x < 13*64 && location.y > 64 && location.y < 13*64 && !isBuildingHere(location)):
+		var newBuilding = Building_Collection.instance()
+		newBuilding.position = location
+		newBuilding.z_index = location.y
+		add_child(newBuilding)
+		buildings.push_back(newBuilding.position)
 	pass
 
 func _input(event):
