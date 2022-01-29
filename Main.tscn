@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Art/screen_template.png" type="Texture" id=1]
 [ext_resource path="res://Goblin.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Main.gd" type="Script" id=3]
+[ext_resource path="res://Building.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -27,6 +28,7 @@ _data = {
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 3 )
 Goblin_scene = ExtResource( 2 )
+Building_Collection = ExtResource( 4 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_right = 1327.0
