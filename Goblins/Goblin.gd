@@ -1,5 +1,8 @@
 extends Node2D
 
+signal hit_reg
+signal rail_reg
+
 export(int) var Speed = 10
 export(float) var CheckFrequency = 1.0
 export(int) var Health = 10
@@ -73,9 +76,19 @@ func _process(delta):
 		Sprites.animation = Anim[1]
 
 
-func _on_Goblin_area_entered(Other):
+func _on_Goblin_area_entered(_Other):
 	Bouncing += 1
 
 
-func _on_Goblin_area_exited(Other):
+func _on_Goblin_area_exited(_Other):
 	Bouncing -= 1
+
+
+func _on_hit_reg():
+	print("I'm hit!")
+	pass # Replace with function body.
+
+
+func _on_rail_reg():
+	print("I've been railed!")
+	pass # Replace with function body.

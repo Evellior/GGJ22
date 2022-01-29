@@ -7,4 +7,5 @@
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2( 3.2, 3.2 )
 shape = SubResource( 1 )
