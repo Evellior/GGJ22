@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/TEST.png-804efe6e22854ddaa229a69578983998.stex"
+path="res://.import/goblin_right_walkx64.png-ebaa3800109fe0e5dc69b24fa6506245.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://TEST.png"
-dest_files=[ "res://.import/TEST.png-804efe6e22854ddaa229a69578983998.stex" ]
+source_file="res://Art/goblin_right_walkx64.png"
+dest_files=[ "res://.import/goblin_right_walkx64.png-ebaa3800109fe0e5dc69b24fa6506245.stex" ]
 
 [params]
 
