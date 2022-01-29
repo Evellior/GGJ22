@@ -85,10 +85,10 @@ func _on_Goblin_area_exited(_Other):
 
 
 func _on_hit_reg():
-	print("I'm hit!")
+	DealDammage(5)
 	pass # Replace with function body.
 
 
 func _on_rail_reg():
-	print("I've been railed!")
+	DealDammage(10)
 	pass # Replace with function body.
