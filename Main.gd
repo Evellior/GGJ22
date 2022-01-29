@@ -50,7 +50,6 @@ func _process(delta):
 	var GoblinsToRemove = Array()
 	
 	for i in Goblins.size():
-		print(i)
 		#if (Gobo.RecheckDirection()):
 		if (Goblins[i].IsAlive()):
 			Goblins[i].CheckDirection(closestBuilding(Goblins[i].position))
