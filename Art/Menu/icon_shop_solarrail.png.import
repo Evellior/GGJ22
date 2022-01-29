@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon_shop_thumper.png-d7b66356524688a434338eae1a44f79e.stex"
+path="res://.import/icon_shop_solarrail.png-e9165cce2ace3b1b844cb33ce559e439.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/icon_shop_thumper.png"
-dest_files=[ "res://.import/icon_shop_thumper.png-d7b66356524688a434338eae1a44f79e.stex" ]
+source_file="res://Art/Menu/icon_shop_solarrail.png"
+dest_files=[ "res://.import/icon_shop_solarrail.png-e9165cce2ace3b1b844cb33ce559e439.stex" ]
 
 [params]
 

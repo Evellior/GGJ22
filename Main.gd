@@ -1,5 +1,7 @@
 extends Node
 
+export(PackedScene) var Menu_scene
+
 export(PackedScene) var Goblin_scene
 
 export(PackedScene) var Thumper_scene

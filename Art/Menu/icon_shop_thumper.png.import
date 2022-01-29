@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon_shop_supplybeacon.png-76a715a0b3d79d55faee12892c948005.stex"
+path="res://.import/icon_shop_thumper.png-8fbd1e9475dc2a5561badd984fea8318.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/icon_shop_supplybeacon.png"
-dest_files=[ "res://.import/icon_shop_supplybeacon.png-76a715a0b3d79d55faee12892c948005.stex" ]
+source_file="res://Art/Menu/icon_shop_thumper.png"
+dest_files=[ "res://.import/icon_shop_thumper.png-8fbd1e9475dc2a5561badd984fea8318.stex" ]
 
 [params]
 
