@@ -16,6 +16,7 @@ var buildings = PoolVector2Array()
 var nextBuild = ""
 var Goblins = Array()
 var tempdelta = 0.0
+var BuildPhase = true
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -27,7 +28,7 @@ func _ready():
 	add_child(thumperButton)
 	placeCore()
 	
-	GameStats.AddPollution(3)
+	GameStats.AddPollution(6)
 	
 	var Time = OS.get_time()
 	
@@ -41,20 +42,30 @@ func _process(delta):
 		if (get_node("Spawn").is_stopped()):
 			get_node("Spawn").start()
 			_on_SwapDirection_timeout()
+		else:
+			var TheLabel = get_node("Menu/Label")
+			TheLabel.text = String(int(get_node("Spawn").time_left))
 	else:
 		tempdelta += delta
-		if (tempdelta > 2.0):
-			GameStats.GoblinKilled()
+		if (tempdelta > 5.0):
+			var damage = 0
+			for goblin in Goblins:
+				damage = (randi() % 9) + 1
+				if( is_instance_valid(goblin)):
+					goblin.DealDammage(10)
+					if(!goblin.IsAlive()):
+						GameStats.GoblinKilled()
 			tempdelta = 0
 	
 	var GoblinsToRemove = Array()
 	
 	for i in Goblins.size():
 		#if (Gobo.RecheckDirection()):
-		if (Goblins[i].IsAlive()):
-			Goblins[i].CheckDirection(closestBuilding(Goblins[i].position))
-		else:
-			GoblinsToRemove.push_back(i)
+		if (is_instance_valid(Goblins[i])):
+			if (Goblins[i].IsAlive()):
+				Goblins[i].CheckDirection(closestBuilding(Goblins[i].position))
+			else:
+				GoblinsToRemove.push_back(i)
 	
 	var RemoveIndex = 0
 	
@@ -62,7 +73,8 @@ func _process(delta):
 		RemoveIndex = GoblinsToRemove[i]
 		
 		Goblins[RemoveIndex].queue_free()
-		Goblins.pop_at(RemoveIndex)
+		
+	GoblinsToRemove.clear()
 
 func _input(event):
 	# print(event.as_text())
@@ -81,6 +93,8 @@ func _input(event):
 func _on_Spawn_timeout():
 	var SpawnPoint = ""
 	var GoblinSprite = ""
+	
+	BuildPhase = false
 	
 	var WaveTimer = get_node("Spawn")
 	WaveTimer.stop()
@@ -122,7 +136,11 @@ func _on_SwapDirection_timeout():
 	var RightArrow = get_node("RightArrow")
 	var UpArrow = get_node("UpArrow")
 	
+	Goblins.clear()
+	
 	Direction = randi() % 4
+	
+	BuildPhase = true
 	
 	DownArrow.visible = false
 	RightArrow.visible = false
@@ -207,7 +225,7 @@ func placeThumper(location):
 	location = getGridRoundedLocation(location)
 	
 	#check is inside build area and other build allowed checks
-	if (location.x > 64 && location.x < 13*64 && location.y > 64 && location.y < 13*64 && !isBuildingHere(location)):
+	if (location.x > 64 && location.x < 13*64 && location.y > 64 && location.y < 13*64 && !isBuildingHere(location) && BuildPhase):
 		#offset for individual sprite
 		location.x += 2
 		location.y -= 15
@@ -224,7 +242,7 @@ func placeSolarRail(location):
 	location = getGridRoundedLocation(location)
 	
 	#check is inside build area and other build allowed checks
-	if (location.x > 64 && location.x < 13*64 && location.y > 64 && location.y < 13*64 && !isBuildingHere(location)):
+	if (location.x > 64 && location.x < 13*64 && location.y > 64 && location.y < 13*64 && !isBuildingHere(location) && BuildPhase):
 		#offset for individual sprite
 		location.x += 2
 		location.y -= 15
@@ -241,7 +259,7 @@ func placeSupplyBeacon(location):
 	location = getGridRoundedLocation(location)
 	
 	#check is inside build area and other build allowed checks
-	if (location.x > 64 && location.x < 13*64 && location.y > 64 && location.y < 13*64 && !isBuildingHere(location)):
+	if (location.x > 64 && location.x < 13*64 && location.y > 64 && location.y < 13*64 && !isBuildingHere(location) && BuildPhase):
 		#offset for individual sprite
 		location.x += 2
 		location.y -= 15
