@@ -17,6 +17,7 @@ var nextBuild = ""
 var Goblins = Array()
 var tempdelta = 0.0
 var BuildPhase = true
+var GameOver = false
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -28,7 +29,7 @@ func _ready():
 	add_child(thumperButton)
 	placeCore()
 	
-	GameStats.AddPollution(2)
+	GameStats.AddPollution(20)
 	
 	var Time = OS.get_time()
 	
@@ -38,66 +39,79 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if (!GameStats.IsInWave()):
-		if (get_node("Spawn").is_stopped()):
-			get_node("Spawn").start()
-			_on_SwapDirection_timeout()
+	if (!GameOver):
+		if (!GameStats.IsInWave()):
+			if (get_node("Spawn").is_stopped()):
+				get_node("Spawn").start()
+				_on_SwapDirection_timeout()
+			else:
+				var TheLabel = get_node("Menu/Label")
+				TheLabel.text = "Next Wave\n" + String(int(get_node("Spawn").time_left))
 		else:
 			var TheLabel = get_node("Menu/Label")
-			TheLabel.text = "Next Wave\n" + String(int(get_node("Spawn").time_left))
+			TheLabel.text = "Next Wave\n" + "Is Here"
+			tempdelta += delta
+			if (tempdelta > 0.1):
+				var damage = 0
+				for goblin in Goblins:
+					damage = (randi() % 9) + 1
+					if( is_instance_valid(goblin)):
+						goblin.DealDammage(10)
+						if(!goblin.IsAlive()):
+							GameStats.GoblinKilled()
+				tempdelta = 0
+		
+		var TheLabel = get_node("Menu/Label2")
+		TheLabel.text = "Gold\n" + String(GameStats.Gold)
+		
+		TheLabel = get_node("Menu/Label3")
+		TheLabel.text = "Score\n" + String(GameStats.Score)
+		
+		var GoblinsToRemove = Array()
+		
+		for i in Goblins.size():
+			#if (Gobo.RecheckDirection()):
+			if (is_instance_valid(Goblins[i])):
+				if (Goblins[i].IsAlive()):
+					Goblins[i].CheckDirection(closestBuilding(Goblins[i].position))
+				else:
+					GoblinsToRemove.push_back(i)
+					GameStats.GoblinKilled()
+		
+		var RemoveIndex = 0
+		
+		for i in GoblinsToRemove.size():
+			RemoveIndex = GoblinsToRemove[i]
+			
+			Goblins[RemoveIndex].queue_free()
+			
+		GoblinsToRemove.clear()
+		
+		#TODO: add core HP checks here
+		if (GameStats.GetPollution() >= 100):
+			GameOver = true
 	else:
-		var TheLabel = get_node("Menu/Label")
-		TheLabel.text = "Next Wave\n" + "Is Here"
-#		tempdelta += delta
-#		if (tempdelta > 0.1):
-#			var damage = 0
-#			for goblin in Goblins:
-#				damage = (randi() % 9) + 1
-#				if( is_instance_valid(goblin)):
-#					goblin.DealDammage(10)
-#					if(!goblin.IsAlive()):
-#						GameStats.GoblinKilled()
-#			tempdelta = 0
-	
-	var TheLabel = get_node("Menu/Label2")
-	TheLabel.text = "Gold\n" + String(GameStats.Gold)
-	
-	TheLabel = get_node("Menu/Label3")
-	TheLabel.text = "Score\n" + String(GameStats.Score)
-	
-	var GoblinsToRemove = Array()
-	
-	for i in Goblins.size():
-		#if (Gobo.RecheckDirection()):
-		if (is_instance_valid(Goblins[i])):
-			if (Goblins[i].IsAlive()):
-				Goblins[i].CheckDirection(closestBuilding(Goblins[i].position))
-			else:
-				GoblinsToRemove.push_back(i)
-				GameStats.GoblinKilled()
-	
-	var RemoveIndex = 0
-	
-	for i in GoblinsToRemove.size():
-		RemoveIndex = GoblinsToRemove[i]
-		
-		Goblins[RemoveIndex].queue_free()
-		
-	GoblinsToRemove.clear()
+		$GameOver/Label.text = String(GameStats.Score)
+		$GameOver.visible = true
 
 func _input(event):
 	# print(event.as_text())
 	if event is InputEventMouseButton:
-		if event.is_pressed():
-			match nextBuild:
-				"Thumper":
-					if(placeThumper(event.position)): nextBuild = ""
-				"SolarRail":
-					if(placeSolarRail(event.position)): nextBuild = ""
-				"SupplyBeacon":
-					if(placeSupplyBeacon(event.position)): nextBuild = ""
-				"":
-					print("Nothing to build")
+		if(!GameOver):
+			if event.is_pressed():
+				match nextBuild:
+					"Thumper":
+						if(placeThumper(event.position)): nextBuild = ""
+					"SolarRail":
+						if(placeSolarRail(event.position)): nextBuild = ""
+					"SupplyBeacon":
+						if(placeSupplyBeacon(event.position)): nextBuild = ""
+					"":
+						print("Nothing to build")
+		else:
+			get_tree().reload_current_scene()
+			get_tree().change_scene("res://MainMenu.tscn")
+			
 
 func _on_Spawn_timeout():
 	var SpawnPoint = ""
