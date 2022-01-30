@@ -76,12 +76,14 @@ func _process(delta):
 		Sprites.animation = Anim[1]
 
 
-func _on_Goblin_area_entered(_Other):
-	Bouncing += 1
+func _on_Goblin_area_entered(sender):
+	if(sender.is_in_group("buildings")):
+		Bouncing += 1
 
 
-func _on_Goblin_area_exited(_Other):
-	Bouncing -= 1
+func _on_Goblin_area_exited(sender):
+	if(sender.is_in_group("buildings")):
+		Bouncing -= 1
 
 
 func _on_hit_reg():

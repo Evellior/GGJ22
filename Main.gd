@@ -225,8 +225,8 @@ func placeCore():
 	buildings.push_back(getGridRoundedLocation(bottomRight))
 
 	#offset for animation
-	newBuilding.position.x += 2
-	newBuilding.position.y -= 30
+	# newBuilding.position.x += 2
+	# newBuilding.position.y -= 30
 	add_child(newBuilding)
 
 func placeThumper(location):
@@ -279,6 +279,13 @@ func placeSupplyBeacon(location):
 		buildings.push_back(getGridRoundedLocation(newBuilding.position))
 		return true
 	return false
+
+func RemoveBuilding(location):
+	location = getGridRoundedLocation(location)
+	for i in buildings.size():
+		if (getGridRoundedLocation(buildings[i]).distance_to(location) < 32):
+			buildings.remove(i)
+			break
 ## Menu
 
 func setBuildThumper():
