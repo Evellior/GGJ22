@@ -35,7 +35,9 @@ animations = [ {
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 7 )
-frame = 1
+frame = 3
 playing = true
 
-[node name="Node2D" parent="." instance=ExtResource( 2 )]
+[node name="Building" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, 15 )
+Size = 196.0

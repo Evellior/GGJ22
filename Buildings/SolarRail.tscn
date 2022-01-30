@@ -50,10 +50,11 @@ script = ExtResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 7 )
-frame = 5
+frame = 4
 playing = true
 
-[node name="Node2D" parent="." instance=ExtResource( 2 )]
+[node name="Building" parent="." instance=ExtResource( 2 )]
+Health = 10.0
 
 [node name="Attack Area" type="Area2D" parent="."]
 
@@ -62,6 +63,5 @@ shape = SubResource( 14 )
 disabled = true
 
 [node name="AttackTimer" type="Timer" parent="."]
-wait_time = 3.0
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
