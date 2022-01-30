@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Art/tower_supplybeaconx64.png" type="Texture" id=1]
 [ext_resource path="res://Buildings/Building.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Buildings/SupplyBeacon.gd" type="Script" id=3]
 
 [sub_resource type="AtlasTexture" id=8]
 flags = 4
@@ -32,10 +33,11 @@ animations = [ {
 } ]
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 7 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="Building" parent="." instance=ExtResource( 2 )]

@@ -34,8 +34,10 @@ func Die():
 	print("A tower has collapsed!")
 	GameStats.AddPollution(-Pollution)
 	GameStats.AddGoldGain(-Profit)
-	self.get_parent().get_parent().RemoveBuilding(self.global_position)
-	self.get_parent().queue_free()
+	var parent = self.get_parent()
+	if (is_instance_valid(parent)):
+		parent.get_parent().RemoveBuilding(self.global_position)
+		parent.die()
 
 func _on_reg_hit():
 	TakeDamage(1)

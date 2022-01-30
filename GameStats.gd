@@ -23,6 +23,8 @@ var MaxRegen = 0.50
 var GoblinsThisWave = 0
 var GoblinsKilled = 0
 
+var CoreHealth = 0
+
 var InWave = false
 # Called when the node enters the scene tree for the first time.
 func _ready():

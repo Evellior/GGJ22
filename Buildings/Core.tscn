@@ -76,6 +76,7 @@ script = ExtResource( 3 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 2, -30 )
 frames = SubResource( 12 )
+frame = 7
 playing = true
 
 [node name="Attack Area" type="Area2D" parent="."]
@@ -88,6 +89,7 @@ disabled = true
 wait_time = 3.0
 
 [node name="Building" parent="." instance=ExtResource( 2 )]
+Health = 1.0
 Size = 128.0
 Pollution = 2
 

@@ -95,6 +95,10 @@ func _process(delta):
 		$GameOver/Label.text = String(GameStats.Score)
 		$GameOver.visible = true
 
+func EndGame():
+	GameOver = true
+	pass
+
 func _input(event):
 	# print(event.as_text())
 	if event is InputEventMouseButton:

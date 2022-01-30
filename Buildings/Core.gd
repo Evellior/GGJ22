@@ -15,6 +15,7 @@ func _ready():
 
 func _process(_delta):
 	var AttackShape = get_node("Attack Area/AttackCollisionShape2D")
+	
 	if(!AttackShape.get("disabled")):
 		if(wait > 0):
 			wait -= 1
@@ -38,3 +39,7 @@ func _on_AttackTimer_timeout():
 func _on_Attack_Area_area_entered(sender):
 	if(sender.is_in_group("goblins")): sender.emit_signal("hit_reg")
 	pass # Replace with function body.
+
+func die():
+	self.get_parent().EndGame()
+	self.queue_free()

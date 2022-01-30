@@ -32,3 +32,6 @@ func _on_AttackTimer_timeout():
 	var AttackShape = get_node("Attack Area/AttackCollisionShape2D")
 	AttackShape.set_deferred("disabled", false)
 	pass # Replace with function body.
+
+func die():
+	self.queue_free()

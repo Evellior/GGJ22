@@ -34,3 +34,6 @@ func _on_AttackTimer_timeout():
 	AttackShape.set_deferred("disabled", false)
 	fireConsumed = false
 	pass # Replace with function body.
+
+func die():
+	self.queue_free()
