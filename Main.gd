@@ -50,16 +50,17 @@ func _process(delta):
 		else:
 			var TheLabel = get_node("Menu/Label")
 			TheLabel.text = "Next Wave\n" + "Is Here"
-			tempdelta += delta
-			if (tempdelta > 0.1):
-				var damage = 0
-				for goblin in Goblins:
-					damage = (randi() % 9) + 1
-					if( is_instance_valid(goblin)):
-						goblin.DealDammage(10)
-						if(!goblin.IsAlive()):
-							GameStats.GoblinKilled()
-				tempdelta = 0
+			## Kill goblins passively
+			# tempdelta += delta
+			# if (tempdelta > 0.1):
+			# 	var damage = 0
+			# 	for goblin in Goblins:
+			# 		damage = (randi() % 9) + 1
+			# 		if( is_instance_valid(goblin)):
+			# 			goblin.DealDammage(10)
+			# 			if(!goblin.IsAlive()):
+			# 				GameStats.GoblinKilled()
+			# 	tempdelta = 0
 		
 		var TheLabel = get_node("Menu/Label2")
 		TheLabel.text = "Gold\n" + String(GameStats.Gold)
@@ -238,17 +239,17 @@ func placeCore():
 	buildings.push_back(getGridRoundedLocation(bottomLeft))
 	buildings.push_back(getGridRoundedLocation(bottomRight))
 
-	#offset for animation
-	# newBuilding.position.x += 2
-	# newBuilding.position.y -= 30
 	add_child(newBuilding)
 
 func placeThumper(location):
+	var cost = Thumper_scene.instance().get_node("Building").Cost
+	
 	#find closest grid location
 	location = getGridRoundedLocation(location)
 	
 	#check is inside build area and other build allowed checks
-	if (location.x > 64 && location.x < 13*64 && location.y > 64 && location.y < 13*64 && !isBuildingHere(location) && BuildPhase):
+	if (location.x > 64 && location.x < 13*64 && location.y > 64 && location.y < 13*64 && !isBuildingHere(location) && BuildPhase && GameStats.HaveEnough(cost)):
+		GameStats.Spend(cost)
 		#offset for individual sprite
 		location.x += 2
 		location.y -= 15
@@ -261,11 +262,14 @@ func placeThumper(location):
 	return false
 
 func placeSolarRail(location):
+	var cost = SolarRail_scene.instance().get_node("Building").Cost
+	
 	#find closest grid location
 	location = getGridRoundedLocation(location)
 	
 	#check is inside build area and other build allowed checks
-	if (location.x > 64 && location.x < 13*64 && location.y > 64 && location.y < 13*64 && !isBuildingHere(location) && BuildPhase):
+	if (location.x > 64 && location.x < 13*64 && location.y > 64 && location.y < 13*64 && !isBuildingHere(location) && BuildPhase && GameStats.HaveEnough(cost)):
+		GameStats.Spend(cost)
 		#offset for individual sprite
 		location.x += 2
 		location.y -= 15
@@ -278,11 +282,14 @@ func placeSolarRail(location):
 	return false
 
 func placeSupplyBeacon(location):
+	var cost = SupplyBeacon_scene.instance().get_node("Building").Cost
+	
 	#find closest grid location
 	location = getGridRoundedLocation(location)
 	
 	#check is inside build area and other build allowed checks
-	if (location.x > 64 && location.x < 13*64 && location.y > 64 && location.y < 13*64 && !isBuildingHere(location) && BuildPhase):
+	if (location.x > 64 && location.x < 13*64 && location.y > 64 && location.y < 13*64 && !isBuildingHere(location) && BuildPhase && GameStats.HaveEnough(cost)):
+		GameStats.Spend(cost)
 		#offset for individual sprite
 		location.x += 2
 		location.y -= 15

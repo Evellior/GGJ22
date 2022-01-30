@@ -3,7 +3,7 @@ extends Node
 #varibles for changing the wave strength
 var KilledGoblinsScale = 0.0
 var PollutionScale = 0.01
-var SurvivedScale = 0.0
+var SurvivedScale = 0.5
 
 var TotalGoblinsKilled = 0
 var PollutionLevel = 1
@@ -11,14 +11,14 @@ var PollutionMax = 100
 var WavesSurvived = 0
 
 var Gold = 5
-var GoldPerWave = 2
+var GoldPerWave = 0
 
 var Score = 0
 
 var PollutionPerWave = 0
 var PollutionRegenBank = 100
-var PollutionRegenRecovery = 15
-var MaxRegen = 0.30
+var PollutionRegenRecovery = 30
+var MaxRegen = 0.50
 
 var GoblinsThisWave = 0
 var GoblinsKilled = 0
@@ -50,7 +50,7 @@ func GetPollution():
 
 func StartWave():
 	InWave = true
-	GoblinsThisWave = 0
+	GoblinsThisWave = 1
 	
 	GoblinsThisWave += (TotalGoblinsKilled * KilledGoblinsScale)
 	GoblinsThisWave += (PollutionLevel * PollutionScale)
@@ -63,7 +63,7 @@ func StartWave():
 	return ceil(GoblinsThisWave)
 
 func HaveEnough(Amount):
-	return (Amount >= Gold)
+	return (Amount <= Gold)
 
 func Spend(Amount):
 	var Return = false

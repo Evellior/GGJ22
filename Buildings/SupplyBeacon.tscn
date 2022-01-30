@@ -35,9 +35,13 @@ animations = [ {
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 7 )
-frame = 3
+frame = 2
 playing = true
 
 [node name="Building" parent="." instance=ExtResource( 2 )]
 position = Vector2( 0, 15 )
+Health = 5.0
 Size = 196.0
+Pollution = 2
+Cost = 7
+Profit = 3
