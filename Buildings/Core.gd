@@ -33,3 +33,8 @@ func _on_AttackTimer_timeout():
 	var AttackShape = get_node("Attack Area/AttackCollisionShape2D")
 	AttackShape.set_deferred("disabled", false)
 	pass # Replace with function body.
+
+
+func _on_Attack_Area_area_entered(sender):
+	if(sender.is_in_group("goblins")): sender.emit_signal("hit_reg")
+	pass # Replace with function body.
