@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://StartButton.gd" type="Script" id=1]
+[ext_resource path="res://Art/scene_menu.png" type="Texture" id=2]
+[ext_resource path="res://Art/button_menu_start.png" type="Texture" id=3]
+[ext_resource path="res://ExitButton.gd" type="Script" id=4]
+[ext_resource path="res://Art/button_menu_exit.png" type="Texture" id=5]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="BackGround" type="TextureRect" parent="."]
+margin_right = 1099.0
+margin_bottom = 726.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartButton" type="TextureRect" parent="BackGround"]
+margin_left = 819.0
+margin_top = 428.0
+margin_right = 1202.0
+margin_bottom = 537.0
+texture = ExtResource( 3 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExitButton" type="TextureRect" parent="BackGround"]
+margin_left = 872.0
+margin_top = 562.0
+margin_right = 1136.0
+margin_bottom = 652.0
+texture = ExtResource( 5 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
