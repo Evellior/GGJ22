@@ -28,7 +28,7 @@ func _ready():
 	add_child(thumperButton)
 	placeCore()
 	
-	GameStats.AddPollution(6)
+	GameStats.AddPollution(2)
 	
 	var Time = OS.get_time()
 	
@@ -44,18 +44,26 @@ func _process(delta):
 			_on_SwapDirection_timeout()
 		else:
 			var TheLabel = get_node("Menu/Label")
-			TheLabel.text = String(int(get_node("Spawn").time_left))
+			TheLabel.text = "Next Wave\n" + String(int(get_node("Spawn").time_left))
 	else:
-		tempdelta += delta
-		if (tempdelta > 5.0):
-			var damage = 0
-			for goblin in Goblins:
-				damage = (randi() % 9) + 1
-				if( is_instance_valid(goblin)):
-					goblin.DealDammage(10)
-					if(!goblin.IsAlive()):
-						GameStats.GoblinKilled()
-			tempdelta = 0
+		var TheLabel = get_node("Menu/Label")
+		TheLabel.text = "Next Wave\n" + "Is Here"
+#		tempdelta += delta
+#		if (tempdelta > 0.1):
+#			var damage = 0
+#			for goblin in Goblins:
+#				damage = (randi() % 9) + 1
+#				if( is_instance_valid(goblin)):
+#					goblin.DealDammage(10)
+#					if(!goblin.IsAlive()):
+#						GameStats.GoblinKilled()
+#			tempdelta = 0
+	
+	var TheLabel = get_node("Menu/Label2")
+	TheLabel.text = "Gold\n" + String(GameStats.Gold)
+	
+	TheLabel = get_node("Menu/Label3")
+	TheLabel.text = "Score\n" + String(GameStats.Score)
 	
 	var GoblinsToRemove = Array()
 	
@@ -66,6 +74,7 @@ func _process(delta):
 				Goblins[i].CheckDirection(closestBuilding(Goblins[i].position))
 			else:
 				GoblinsToRemove.push_back(i)
+				GameStats.GoblinKilled()
 	
 	var RemoveIndex = 0
 	

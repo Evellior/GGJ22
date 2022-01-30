@@ -35,7 +35,7 @@ animations = [ {
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 7 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="Node2D" parent="." instance=ExtResource( 2 )]
